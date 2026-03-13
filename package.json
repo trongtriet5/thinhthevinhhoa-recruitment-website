@@ -1,0 +1,43 @@
+{
+  "name": "ttvh-recruitment-portal",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed:jobs": "node scripts/seed-jobs.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.5.0",
+    "@tabler/icons-react": "^3.40.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.577.0",
+    "nanoid": "^5.1.6",
+    "next": "latest",
+    "postgres": "^3.4.8",
+    "radix-ui": "^1.4.3",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-icons": "^5.6.0",
+    "react-quill-new": "^3.8.3",
+    "shadcn": "^4.0.6",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss-animate": "latest",
+    "tw-animate-css": "^1.4.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "@types/node": "20.x",
+    "@types/react": "18.x",
+    "@types/react-dom": "18.x",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "prisma": "^7.5.0",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}

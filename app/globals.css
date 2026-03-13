@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #1a1c1a;
+  --color-primary: #d9b300;
+  --color-primary-dark: #b89800;
+  --color-primary-light: #fbf7e5;
+  --color-accent: #e0c232;
+
+  --color-gold-100: #fbf7e5;
+  --color-gold-200: #f7efcc;
+  --color-gold-300: #f3e8b2;
+  --color-gold-400: #efe099;
+  --color-gold-500: #ecd97f;
+  --color-gold-600: #e8d166;
+  --color-gold-700: #e4c94c;
+  --color-gold-800: #e0c232;
+  --color-gold-900: #dcba19;
+  --color-gold-950: #d9b300;
+
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+
+  --container-center: true;
+  --container-padding: 2rem;
+  --container-screens-2xl: 1400px;
+}
+
+@layer base {
+  .container {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 1400px;
+    padding-inline: 2rem;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "Montserrat", sans-serif !important;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Force font on all semantic elements */
+  h1, h2, h3, h4, h5, h6, 
+  p, span, div, a, li, label, 
+  input, textarea, select, button,
+  table, th, td {
+    font-family: "Montserrat", sans-serif !important;
+  }
+}
+
+/* Global Utility for font-sans to strictly use Montserrat */
+:root {
+  --font-sans: "Montserrat", sans-serif !important;
+}
+
+* {
+  font-family: "Montserrat", sans-serif !important;
+}
+
+/* Hide number input spin buttons */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
