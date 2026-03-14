@@ -30,11 +30,10 @@ export default function LoginPage() {
         <div className="min-h-screen flex items-center justify-center bg-[#fafafa] px-4 font-montserrat" style={{ fontFamily: '"Montserrat", sans-serif' }}>
             <Card className="w-full max-w-[400px] border-0 shadow-2xl rounded-[2.5rem] bg-white overflow-hidden">
                 <CardContent className="p-0">
-                    <div className="bg-primary p-12 text-black flex flex-col items-center gap-6">
-                        <Image src="/logo_ttvh.png" alt="Logo" width={140} height={40} className="h-10 w-auto object-contain" />
-                        <div className="text-center space-y-1">
-                            <h1 className="text-sm font-black text-black tracking-[0.2em] uppercase">Hệ thống quản trị</h1>
-                            <p className="text-[10px] text-black/50 uppercase tracking-[0.3em] font-bold">Portal v1.0.2</p>
+                    <div className="bg-white pt-16 pb-8 text-black flex flex-col items-center gap-8">
+                        <Image src="/logo_ttvh.png" alt="Logo" width={280} height={80} className="h-24 w-auto object-contain" />
+                        <div className="text-center space-y-2">
+                            <h1 className="text-sm font-black text-black tracking-[0.2em] uppercase">Trang quản lý hệ thống</h1>
                         </div>
                     </div>
 
