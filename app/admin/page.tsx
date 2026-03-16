@@ -393,15 +393,15 @@ export default function AdminPage() {
                 <header className="h-20 border-b border-zinc-100 flex items-center justify-between px-12 shrink-0 sticky top-0 z-10 bg-white/80 backdrop-blur-md">
                     <div className="space-y-1">
                         <h1 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-900">Hệ thống quản trị</h1>
-                        <p className="text-[10px] text-zinc-400 font-medium uppercase tracking-widest">TTVH Recruitment Portal</p>
+                        <p className="text-[10px] text-zinc-400 font-medium uppercase tracking-widest">Thinh The Vinh Hoa Recruitment Portal</p>
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="text-right hidden sm:block">
                             <p className="text-xs font-bold text-zinc-900 leading-tight">Administrator</p>
-                            <p className="text-[10px] text-zinc-400 uppercase tracking-tighter">Quản trị viên bộ phận</p>
+                            <p className="text-[10px] text-zinc-400 uppercase tracking-tighter">Quản trị viên</p>
                         </div>
-                        <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900 text-sm font-black border border-zinc-200 shadow-sm">
-                            AD
+                        <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900 border border-zinc-200 shadow-sm overflow-hidden">
+                            <Image src="/logo_ttvh.png" alt="TTVH Logo" width={48} height={48} className="object-contain" />
                         </div>
                     </div>
                 </header>
