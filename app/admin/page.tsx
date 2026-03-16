@@ -83,7 +83,6 @@ export default function AdminPage() {
         salaryMin: '',
         salaryMax: '',
         isSalaryNegotiable: false,
-        link: '',
         description: '',
         requirements: '',
         status: 'Đang tuyển'
@@ -230,7 +229,6 @@ export default function AdminPage() {
             salaryMin: '',
             salaryMax: '',
             isSalaryNegotiable: false,
-            link: '',
             description: '',
             requirements: '',
             status: 'Đang tuyển'
@@ -253,7 +251,6 @@ export default function AdminPage() {
             salaryMin: '',
             salaryMax: '',
             isSalaryNegotiable: job.salary === 'Thỏa thuận',
-            link: job.link || '',
             description: job.description,
             requirements: job.requirements,
             status: job.status
@@ -298,7 +295,6 @@ export default function AdminPage() {
                     'Địa điểm': 'TP. Hồ Chí Minh, Bình Dương',
                     'Mức lương': '15 - 20 triệu',
                     'Loại hình': 'Toàn thời gian',
-                    'Link 1Office': 'https://1office.vn/tuyen-dung/id1',
                     'Mô tả công việc': 'Nội dung mô tả...\nCó thể xuống dòng mà không cần HTML.',
                     'Yêu cầu': 'Nội dung yêu cầu...\nCó thể xuống dòng mà không cần HTML.'
                 }
@@ -331,7 +327,6 @@ export default function AdminPage() {
                 location: row['Địa điểm'] || '',
                 salary: row['Mức lương'] || '',
                 type: row['Loại hình'] || 'Toàn thời gian',
-                link: row['Link 1Office'] || '',
                 description: row['Mô tả công việc'] || '',
                 requirements: row['Yêu cầu'] || ''
             }))
@@ -506,7 +501,7 @@ export default function AdminPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+                                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                                                 <div className="space-y-3">
                                                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Thương hiệu</Label>
                                                     <select
@@ -531,7 +526,7 @@ export default function AdminPage() {
                                                         {DEPARTMENT_GROUPS.map(group => <option key={group} value={group}>{group}</option>)}
                                                     </select>
                                                 </div>
-                                                <div className="space-y-3">
+                                                <div className="space-y-3 md:col-span-2">
                                                     <div className="flex items-center justify-between">
                                                         <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Mức lương (VNĐ)</Label>
                                                         <label className="flex items-center gap-2 cursor-pointer">
@@ -591,23 +586,17 @@ export default function AdminPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="grid grid-cols-2 gap-8">
-                                                <div className="space-y-3">
-                                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Loại hình</Label>
-                                                    <select
-                                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
-                                                        value={formData.type}
-                                                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                                                    >
-                                                        <option value="Toàn thời gian">Toàn thời gian</option>
-                                                        <option value="Bán thời gian">Bán thời gian</option>
-                                                        <option value="Thời vụ">Thời vụ</option>
-                                                    </select>
-                                                </div>
-                                                <div className="space-y-3">
-                                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Link 1Office (Nếu có)</Label>
-                                                    <Input placeholder="https://..." className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs" value={formData.link} onChange={(e) => setFormData({ ...formData, link: e.target.value })} />
-                                                </div>
+                                            <div className="space-y-3">
+                                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Loại hình</Label>
+                                                <select
+                                                    className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                                    value={formData.type}
+                                                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                                                >
+                                                    <option value="Toàn thời gian">Toàn thời gian</option>
+                                                    <option value="Bán thời gian">Bán thời gian</option>
+                                                    <option value="Thời vụ">Thời vụ</option>
+                                                </select>
                                             </div>
 
                                             <div className="space-y-3">
@@ -788,7 +777,7 @@ export default function AdminPage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                                 <div className="space-y-3">
                                     <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Thương hiệu</Label>
                                     <select
@@ -813,7 +802,7 @@ export default function AdminPage() {
                                         {DEPARTMENT_GROUPS.map(group => <option key={group} value={group}>{group}</option>)}
                                     </select>
                                 </div>
-                                <div className="space-y-3">
+                                <div className="space-y-3 md:col-span-2">
                                     <div className="flex items-center justify-between">
                                         <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Mức lương (VNĐ)</Label>
                                         <label className="flex items-center gap-2 cursor-pointer">
@@ -873,23 +862,17 @@ export default function AdminPage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-8">
-                                <div className="space-y-3">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Loại hình</Label>
-                                    <select
-                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
-                                        value={formData.type}
-                                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                                    >
-                                        <option value="Toàn thời gian">Toàn thời gian</option>
-                                        <option value="Bán thời gian">Bán thời gian</option>
-                                        <option value="Thời vụ">Thời vụ</option>
-                                    </select>
-                                </div>
-                                <div className="space-y-3">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Link 1Office</Label>
-                                    <Input placeholder="https://..." className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs" value={formData.link} onChange={(e) => setFormData({ ...formData, link: e.target.value })} />
-                                </div>
+                            <div className="space-y-3">
+                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Loại hình</Label>
+                                <select
+                                    className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                    value={formData.type}
+                                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                                >
+                                    <option value="Toàn thời gian">Toàn thời gian</option>
+                                    <option value="Bán thời gian">Bán thời gian</option>
+                                    <option value="Thời vụ">Thời vụ</option>
+                                </select>
                             </div>
 
                             <div className="space-y-3 p-6 bg-zinc-50/50 rounded-2xl border border-zinc-100">

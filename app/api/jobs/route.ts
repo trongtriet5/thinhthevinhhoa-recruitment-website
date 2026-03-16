@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     try {
         const body = await request.json()
         // Destructure fields from the body, including 'status' which was missing in the original destructuring
-        const { title, brand, location, type, status, salary, link, description, requirements, position, departmentGroup } = body
+        const { title, brand, location, type, status, salary, description, requirements, position, departmentGroup } = body
         const normalizedDescription = normalizeRichTextInput(description)
         const normalizedRequirements = normalizeRichTextInput(requirements)
         
@@ -26,9 +26,9 @@ export async function POST(request: Request) {
 
         const [newJob] = await sql`
             INSERT INTO "Job" (
-                "id", "title", "brand", "location", "type", "status", "salary", "link", "description", "requirements", "applicants", "position", "departmentGroup", "createdAt", "updatedAt"
+                "id", "title", "brand", "location", "type", "status", "salary", "description", "requirements", "applicants", "position", "departmentGroup", "createdAt", "updatedAt"
             ) VALUES (
-                ${id}, ${title}, ${brand}, ${location}, ${type || 'Toàn thời gian'}, ${status || 'Đang tuyển'}, ${salary}, ${link}, ${normalizedDescription}, ${normalizedRequirements}, 0, ${position || ''}, ${departmentGroup || ''}, ${now}, ${now}
+                ${id}, ${title}, ${brand}, ${location}, ${type || 'Toàn thời gian'}, ${status || 'Đang tuyển'}, ${salary}, ${normalizedDescription}, ${normalizedRequirements}, 0, ${position || ''}, ${departmentGroup || ''}, ${now}, ${now}
             ) RETURNING *
         `
 

@@ -12,7 +12,6 @@ const jobs = [
         location: 'TP. Hồ Chí Minh',
         type: 'Toàn thời gian',
         salary: '15 - 20 triệu',
-        link: 'https://1office.vn/tuyen-dung/maycha-store-manager',
         description: 'Chịu trách nhiệm vận hành cửa hàng, quản lý doanh thu, hàng hóa và chất lượng dịch vụ.\nPhối hợp đào tạo đội ngũ và đảm bảo trải nghiệm khách hàng theo tiêu chuẩn thương hiệu.',
         requirements: 'Có kinh nghiệm quản lý cửa hàng F&B hoặc bán lẻ từ 1 năm trở lên.\nKỹ năng điều phối nhân sự, xử lý tình huống và chịu được áp lực doanh số.'
     },
@@ -24,7 +23,6 @@ const jobs = [
         location: 'Bình Dương',
         type: 'Toàn thời gian',
         salary: '10 - 13 triệu',
-        link: 'https://1office.vn/tuyen-dung/tamhao-shift-supervisor',
         description: 'Giám sát hoạt động trong ca, phân công công việc và hỗ trợ cửa hàng trưởng kiểm soát chất lượng phục vụ.\nTheo dõi tồn kho ngắn hạn và xử lý các vấn đề phát sinh trong ca làm việc.',
         requirements: 'Tối thiểu 6 tháng kinh nghiệm ở vị trí tổ trưởng hoặc giám sát.\nCó tinh thần trách nhiệm, giao tiếp tốt và linh hoạt theo ca.'
     },
@@ -36,7 +34,6 @@ const jobs = [
         location: 'TP. Hồ Chí Minh, Đồng Nai',
         type: 'Toàn thời gian',
         salary: '7 - 9 triệu',
-        link: 'https://1office.vn/tuyen-dung/trahu-barista',
         description: 'Thực hiện pha chế đồ uống đúng công thức và tiêu chuẩn trình bày.\nGiữ gìn khu vực quầy sạch sẽ, hỗ trợ kiểm kê nguyên vật liệu cuối ca.',
         requirements: 'Ưu tiên ứng viên đã từng làm việc trong ngành đồ uống.\nNhanh nhẹn, cẩn thận, có thể làm việc theo ca xoay.'
     },
@@ -48,7 +45,6 @@ const jobs = [
         location: 'TP. Hồ Chí Minh, Long An',
         type: 'Bán thời gian',
         salary: '24.000 - 28.000/giờ',
-        link: 'https://1office.vn/tuyen-dung/maycha-service-staff',
         description: 'Đón tiếp khách hàng, hỗ trợ order và phục vụ tại cửa hàng.\nGiữ vệ sinh khu vực phục vụ và phối hợp với team để đảm bảo tốc độ ra món.',
         requirements: 'Thân thiện, giao tiếp tốt và có thể làm việc cuối tuần.\nPhù hợp với sinh viên cần công việc linh hoạt.'
     },
@@ -60,7 +56,6 @@ const jobs = [
         location: 'TP. Hồ Chí Minh',
         type: 'Toàn thời gian',
         salary: '12 - 16 triệu',
-        link: 'https://1office.vn/tuyen-dung/ttvh-talent-acquisition',
         description: 'Phụ trách tuyển dụng khối vận hành cửa hàng và văn phòng.\nLàm việc với các phòng ban để lập kế hoạch tuyển dụng, sàng lọc hồ sơ và điều phối phỏng vấn.',
         requirements: 'Có kinh nghiệm tuyển dụng mass hoặc retail/F&B là lợi thế.\nKỹ năng giao tiếp, tổ chức và theo dõi tiến độ tuyển dụng tốt.'
     },
@@ -72,7 +67,6 @@ const jobs = [
         location: 'TP. Hồ Chí Minh',
         type: 'Toàn thời gian',
         salary: '14 - 18 triệu',
-        link: 'https://1office.vn/tuyen-dung/tamhao-trade-marketing',
         description: 'Triển khai các chương trình marketing tại điểm bán, phối hợp với vận hành và thiết kế để tăng hiệu quả doanh thu theo chiến dịch.\nTheo dõi hiệu quả POSM và tối ưu hoạt động activation tại cửa hàng.',
         requirements: 'Kinh nghiệm trade marketing từ 1 năm trở lên, ưu tiên ngành F&B.\nCó khả năng lập kế hoạch, làm việc đa phòng ban và bám sát tiến độ triển khai.'
     }
@@ -155,7 +149,7 @@ async function seedJobs() {
 
         await sql`
             INSERT INTO "Job" (
-                "id", "title", "brand", "position", "departmentGroup", "location", "type", "status", "salary", "link", "description", "requirements", "applicants", "createdAt", "updatedAt"
+                "id", "title", "brand", "position", "departmentGroup", "location", "type", "status", "salary", "description", "requirements", "applicants", "createdAt", "updatedAt"
             ) VALUES (
                 ${nanoid()},
                 ${job.title},
@@ -166,7 +160,6 @@ async function seedJobs() {
                 ${job.type},
                 'Đang tuyển',
                 ${job.salary},
-                ${job.link},
                 ${normalizeRichTextInput(job.description)},
                 ${normalizeRichTextInput(job.requirements)},
                 0,

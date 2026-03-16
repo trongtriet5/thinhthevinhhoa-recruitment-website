@@ -11,27 +11,28 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { ApplicationForm } from './ApplicationForm'
 
-const ALL_PROVINCES = [
-    'TP. Hồ Chí Minh',
-    'Hà Nội',
-    'Đà Nẵng',
-    'Bình Dương',
-    'Đồng Nai',
-    'Cần Thơ',
-    'Long An',
-    'Bà Rịa - Vũng Tàu',
-    'Tây Ninh',
-    'Tiền Giang'
-]
+
 
 const ALL_BRANDS = ['MayCha', 'Tam Hảo', 'Trà Hú', 'Back Office', 'DCCK']
+
+const DEPARTMENT_GROUPS = [
+    'Khối vận hành (Các cửa hàng)',
+    'Khối văn phòng (Back Office)',
+    'Khối sản xuất (DCCK)',
+    'Bếp trung tâm (DCCK)'
+]
 
 export function JobBoard() {
     const [jobs, setJobs] = useState<any[]>([])
     const [selectedLocations, setSelectedLocations] = useState<string[]>([])
     const [selectedBrands, setSelectedBrands] = useState<string[]>([])
+    const [selectedDepartments, setSelectedDepartments] = useState<string[]>([])
     const [viewingJob, setViewingJob] = useState<any>(null)
+    const [jobToApply, setJobToApply] = useState<any>(null)
+    const [isApplyFormOpen, setIsApplyFormOpen] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const fetchJobs = async () => {
@@ -72,6 +73,12 @@ export function JobBoard() {
         }
     }
 
+    const handleApply = (job: any) => {
+        setJobToApply(job)
+        setIsApplyFormOpen(true)
+        setViewingJob(null) // Close detail dialog if open
+    }
+
     const filteredJobs = jobs.filter(job => {
         // Multi-location check: If any selected filter is present in job's locations
         const jobLocations = job.location.split(', ')
@@ -79,8 +86,14 @@ export function JobBoard() {
             selectedLocations.some(loc => jobLocations.includes(loc))
 
         const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(job.brand)
-        return locationMatch && brandMatch
+        const departmentMatch = selectedDepartments.length === 0 || selectedDepartments.includes(job.departmentGroup)
+
+        return locationMatch && brandMatch && departmentMatch
     })
+
+    const availableLocations = Array.from(
+        new Set(jobs.flatMap(job => job.location.split(', ')))
+    ).sort((a, b) => a.localeCompare(b, 'vi'))
 
     const getLogo = (brand: string) => {
         const brandLower = brand.toLowerCase()
@@ -101,18 +114,16 @@ export function JobBoard() {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-20">
-                    <aside className="w-full lg:w-64 space-y-12 shrink-0">
-                        <div className="space-y-12 sticky top-40">
-                            <div className="space-y-8">
+                    <aside className="w-full lg:w-64 space-y-8 shrink-0">
+                        <div className="space-y-8 sticky top-40">
+                            <div className="space-y-6">
                                 <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">Địa điểm</h3>
-                                <div className="space-y-5 h-64 overflow-y-auto pr-4 scrollbar-thin">
-                                    {ALL_PROVINCES.map(loc => (
-                                        <label key={loc} className="flex items-center gap-3 cursor-pointer group">
-                                            <input
-                                                type="checkbox"
+                                <div className="space-y-3.5 max-h-64 overflow-y-auto pr-4 scrollbar-thin">
+                                    {availableLocations.map(loc => (
+                                        <label key={loc} className="flex items-center gap-3.5 cursor-pointer group">
+                                            <Checkbox
                                                 checked={selectedLocations.includes(loc)}
-                                                onChange={() => toggleFilter(loc, selectedLocations, setSelectedLocations)}
-                                                className="w-5 h-5 rounded border-black/10 text-primary focus:ring-primary/10 cursor-pointer"
+                                                onCheckedChange={() => toggleFilter(loc, selectedLocations, setSelectedLocations)}
                                             />
                                             <span className={`font-bold transition-colors text-sm ${selectedLocations.includes(loc) ? 'text-primary' : 'text-foreground/40 group-hover:text-primary'}`}>
                                                 {loc}
@@ -122,16 +133,32 @@ export function JobBoard() {
                                 </div>
                             </div>
 
-                            <div className="space-y-8">
+                            <div className="space-y-6">
+                                <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">Khối phòng ban</h3>
+                                <div className="space-y-3.5">
+                                    {DEPARTMENT_GROUPS.map(dept => (
+                                        <label key={dept} className="flex items-start gap-3.5 cursor-pointer group">
+                                            <Checkbox
+                                                className="mt-[2px]"
+                                                checked={selectedDepartments.includes(dept)}
+                                                onCheckedChange={() => toggleFilter(dept, selectedDepartments, setSelectedDepartments)}
+                                            />
+                                            <span className={`font-bold transition-colors text-sm leading-tight ${selectedDepartments.includes(dept) ? 'text-primary' : 'text-foreground/40 group-hover:text-primary'}`}>
+                                                {dept}
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
                                 <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">Thương hiệu</h3>
-                                <div className="space-y-5">
+                                <div className="space-y-3.5">
                                     {ALL_BRANDS.map(brand => (
-                                        <label key={brand} className="flex items-center gap-3 cursor-pointer group">
-                                            <input
-                                                type="checkbox"
+                                        <label key={brand} className="flex items-center gap-3.5 cursor-pointer group">
+                                            <Checkbox
                                                 checked={selectedBrands.includes(brand)}
-                                                onChange={() => toggleFilter(brand, selectedBrands, setSelectedBrands)}
-                                                className="w-5 h-5 rounded border-black/10 text-primary focus:ring-primary/10 cursor-pointer"
+                                                onCheckedChange={() => toggleFilter(brand, selectedBrands, setSelectedBrands)}
                                             />
                                             <span className={`font-bold transition-colors text-sm ${selectedBrands.includes(brand) ? 'text-primary' : 'text-foreground/40 group-hover:text-primary'}`}>
                                                 {brand}
@@ -140,6 +167,7 @@ export function JobBoard() {
                                     ))}
                                 </div>
                             </div>
+
                         </div>
                     </aside>
 
@@ -150,8 +178,8 @@ export function JobBoard() {
                             </div>
                         ) : filteredJobs.length > 0 ? (
                             filteredJobs.map((job) => (
-                                <div key={job.id} className="p-10 rounded-2xl border border-black/5 bg-white hover:border-primary/30 transition-all duration-300 group">
-                                    <div className="flex flex-col md:flex-row items-center gap-12">
+                                <div key={job.id} className="p-6 md:p-10 rounded-2xl border border-black/5 bg-white hover:border-primary/30 transition-all duration-300 group">
+                                    <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
                                         <div className="w-20 h-20 rounded-xl bg-primary/5 flex items-center justify-center shrink-0 p-4">
                                             <Image
                                                 src={getLogo(job.brand)}
@@ -183,7 +211,7 @@ export function JobBoard() {
                                                 )}
                                             </h3>
 
-                                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-3 text-xs font-bold text-foreground/40">
+                                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 md:gap-x-10 gap-y-3 text-xs font-bold text-foreground/40">
                                                 <span className="flex items-center gap-2 italic">
                                                     <IconMapPin className="w-4 h-4 opacity-50" />
                                                     {job.location}
@@ -211,8 +239,11 @@ export function JobBoard() {
                                                     </Button>
                                                 </DialogTrigger>
                                                 {viewingJob && (
-                                                    <DialogContent className="sm:max-w-[700px] p-0 rounded-3xl border-0 overflow-hidden">
-                                                        <div className="bg-primary p-12 text-black">
+                                                    <DialogContent className="sm:max-w-[700px] w-[95vw] md:w-full p-0 rounded-3xl border-0 overflow-hidden">
+                                                        <DialogHeader className="sr-only">
+                                                            <DialogTitle>{viewingJob.title}</DialogTitle>
+                                                        </DialogHeader>
+                                                        <div className="bg-primary p-6 md:p-12 text-black">
                                                             <div className="flex items-center gap-4 mb-6">
                                                                 <span className="px-3 py-1 bg-black text-white text-[10px] font-black uppercase tracking-widest rounded-full">
                                                                     {viewingJob.brand}
@@ -226,7 +257,7 @@ export function JobBoard() {
                                                                     {viewingJob.type}
                                                                 </span>
                                                             </div>
-                                                            <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[1.1] mb-8 flex items-center gap-4">
+                                                            <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.1] mb-6 md:mb-8 flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
                                                                 {viewingJob.title}
                                                                 {viewingJob.position && (
                                                                     <span className="text-[12px] font-black text-black bg-white px-3 py-1 rounded-full uppercase tracking-widest border-2 border-black/5">
@@ -249,7 +280,7 @@ export function JobBoard() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="p-12 space-y-12 bg-white max-h-[60vh] overflow-y-auto">
+                                                        <div className="p-6 md:p-12 space-y-8 md:space-y-12 bg-white max-h-[60vh] overflow-y-auto">
                                                             <div className="space-y-6">
                                                                 <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Mô tả công việc</h3>
                                                                 <div
@@ -265,30 +296,30 @@ export function JobBoard() {
                                                                 />
                                                             </div>
                                                             <div className="pt-10 border-t border-zinc-100">
-                                                                <a
-                                                                    href={viewingJob.link}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    onClick={() => handleTrackClick(viewingJob.id)}
+                                                                <Button
+                                                                    onClick={() => {
+                                                                        handleTrackClick(viewingJob.id)
+                                                                        handleApply(viewingJob)
+                                                                    }}
                                                                     className="flex items-center justify-center w-full h-16 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-primary hover:text-black transition-all"
                                                                 >
                                                                     Ứng tuyển ngay
-                                                                </a>
+                                                                </Button>
                                                             </div>
                                                         </div>
                                                     </DialogContent>
                                                 )}
                                             </Dialog>
 
-                                            <a
-                                                href={job.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                onClick={() => handleTrackClick(job.id)}
+                                            <Button
+                                                onClick={() => {
+                                                    handleTrackClick(job.id)
+                                                    handleApply(job)
+                                                }}
                                                 className="inline-flex items-center justify-center h-16 px-12 rounded-xl bg-black text-white font-black uppercase tracking-widest text-[10px] hover:bg-primary transition-all duration-300 w-full"
                                             >
                                                 Gia nhập ngay
-                                            </a>
+                                            </Button>
                                         </div>
                                     </div>
                                 </div>
@@ -301,6 +332,14 @@ export function JobBoard() {
                     </div>
                 </div>
             </div>
+
+            {jobToApply && (
+                <ApplicationForm
+                    job={jobToApply}
+                    isOpen={isApplyFormOpen}
+                    onOpenChange={setIsApplyFormOpen}
+                />
+            )}
         </section>
     )
 }

@@ -21,12 +21,12 @@ export function Footer() {
                     {/* Brand Section */}
                     <div className="lg:col-span-4 space-y-12">
                         <div className="space-y-8">
-                            <Image 
-                                src="/logo_ttvh.png" 
-                                alt="Thịnh Thế Vinh Hoa Group" 
-                                width={240} 
-                                height={80} 
-                                className="h-20 w-auto object-contain" 
+                            <Image
+                                src="/logo_ttvh.png"
+                                alt="Thịnh Thế Vinh Hoa Group"
+                                width={240}
+                                height={80}
+                                className="h-20 w-auto object-contain"
                             />
                             <p className="text-zinc-300 text-lg leading-relaxed font-bold max-w-sm italic">
                                 "Nơi khát vọng vươn tầm, nơi tài năng tỏa sáng." <br />
@@ -35,7 +35,7 @@ export function Footer() {
                                 </span>
                             </p>
                         </div>
-                        
+
                         <div className="flex gap-4">
                             {[
                                 { icon: IconBrandFacebook, href: "#" },
@@ -43,9 +43,9 @@ export function Footer() {
                                 { icon: IconBrandInstagram, href: "#" },
                                 { icon: IconBrandTwitter, href: "#" }
                             ].map((social, i) => (
-                                <a 
-                                    key={i} 
-                                    href={social.href} 
+                                <a
+                                    key={i}
+                                    href={social.href}
                                     className="w-14 h-14 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center hover:bg-primary hover:border-primary hover:text-black text-zinc-500 transition-all duration-500 group"
                                 >
                                     <social.icon size={22} className="group-hover:scale-110 transition-transform" />
@@ -117,7 +117,7 @@ export function Footer() {
                 <div className="mt-32 pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-10">
                     <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
                         <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-300 italic">
-                            © {new Date().getFullYear()} Thịnh Thế Vinh Hoa. Created by trongtriet5
+                            © {new Date().getFullYear()} Thinh The Vinh Hoa. Created by trongtriet5
                         </p>
                     </div>
                     <div className="flex flex-wrap justify-center gap-8 md:gap-12">

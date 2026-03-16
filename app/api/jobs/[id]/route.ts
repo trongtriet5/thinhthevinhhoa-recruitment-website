@@ -12,7 +12,7 @@ export async function PATCH(
         const now = new Date()
 
         // Destructure fields from the body
-        const { title, brand, location, type, position, departmentGroup, status, salary, link, description, requirements } = body
+        const { title, brand, location, type, position, departmentGroup, status, salary, description, requirements } = body
         const normalizedDescription = normalizeRichTextInput(description)
         const normalizedRequirements = normalizeRichTextInput(requirements)
 
@@ -26,7 +26,6 @@ export async function PATCH(
                 "departmentGroup" = ${departmentGroup || ''},
                 "status" = ${status},
                 "salary" = ${salary},
-                "link" = ${link},
                 "description" = ${normalizedDescription},
                 "requirements" = ${normalizedRequirements},
                 "updatedAt" = ${now}

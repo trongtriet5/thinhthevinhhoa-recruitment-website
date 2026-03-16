@@ -20,9 +20,9 @@ export async function POST(request: Request) {
 
             const [newJob] = await sql`
                 INSERT INTO "Job" (
-                    "id", "title", "brand", "location", "type", "status", "salary", "link", "description", "requirements", "applicants", "position", "departmentGroup", "createdAt", "updatedAt"
+                    "id", "title", "brand", "location", "type", "status", "salary", "description", "requirements", "applicants", "position", "departmentGroup", "createdAt", "updatedAt"
                 ) VALUES (
-                    ${id}, ${job.title}, ${job.brand}, ${job.location}, ${job.type || 'Toàn thời gian'}, 'Đang tuyển', ${job.salary}, ${job.link || ''}, ${normalizedDescription}, ${normalizedRequirements}, 0, ${job.position || ''}, ${job.departmentGroup || ''}, ${now}, ${now}
+                    ${id}, ${job.title}, ${job.brand}, ${job.location}, ${job.type || 'Toàn thời gian'}, 'Đang tuyển', ${job.salary}, ${normalizedDescription}, ${normalizedRequirements}, 0, ${job.position || ''}, ${job.departmentGroup || ''}, ${now}, ${now}
                 ) RETURNING "id"
             `
             results.push(newJob)
