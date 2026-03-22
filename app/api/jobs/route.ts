@@ -3,6 +3,8 @@ import { sql } from '@/lib/db'
 import { normalizeRichTextInput } from '@/lib/rich-text'
 import { nanoid } from 'nanoid'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
     try {
         const jobs = await sql`SELECT * FROM "Job" ORDER BY "createdAt" DESC`

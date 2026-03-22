@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-
-
+import { sql } from '@/lib/db'
 
 export async function POST(request: Request) {
     try {
@@ -15,6 +14,17 @@ export async function POST(request: Request) {
         if (birthday) {
             const [y, m, d] = birthday.split('-')
             formattedBirthday = `${d}/${m}/${y}`
+        }
+
+        // Format the phone number (keep only digits)
+        const cleanPhone = phone.toString().replace(/\D/g, '')
+
+        // Check if candidate already applied for this jobId
+        if (cleanPhone && jobId) {
+            const existing = await sql`SELECT id FROM "CandidateApplication" WHERE "phone" = ${cleanPhone} AND "jobId" = ${jobId}`
+            if (existing.length > 0) {
+                return NextResponse.json({ error: 'Duplicate', message: 'Bạn đã ứng tuyển vị trí này rồi! Hệ thống đã ghi nhận.' }, { status: 400 })
+            }
         }
 
         const accessToken = process.env.OFFICE_ACCESS_TOKEN || ''
@@ -68,6 +78,15 @@ export async function POST(request: Request) {
         if (!response.ok) {
             console.error('1Office API error:', result)
             return NextResponse.json({ error: 'Failed to submit to 1Office', details: result }, { status: response.status })
+        }
+
+        // Record successful application
+        if (cleanPhone && jobId) {
+            try {
+                await sql`INSERT INTO "CandidateApplication" ("phone", "jobId", "jobPosition") VALUES (${cleanPhone}, ${jobId}, ${jobPosition || ''}) ON CONFLICT DO NOTHING`
+            } catch (err) {
+                console.error('Failed to log CandidateApplication:', err)
+            }
         }
 
         return NextResponse.json({ success: true, data: result })

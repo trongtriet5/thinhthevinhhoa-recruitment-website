@@ -56,7 +56,7 @@ export function Footer() {
 
                     {/* Links Section */}
                     <div className="lg:col-span-2 space-y-10">
-                        <h3 className="text-[11px] font-black tracking-[0.4em] text-zinc-300 border-l-2 border-primary pl-4">Khám phá</h3>
+                        <h3 className="text-[13px] font-black tracking-[0.4em] text-zinc-300 border-l-2 border-primary pl-4">Khám phá</h3>
                         <ul className="space-y-6">
                             {FOOTER_NAV_ITEMS.map((item) => (
                                 <li key={item.name}>
@@ -72,7 +72,7 @@ export function Footer() {
                     {/* Contact Section */}
                     <div className="lg:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div className="space-y-10">
-                            <h3 className="text-[11px] font-black tracking-[0.4em] text-zinc-300 border-l-2 border-primary pl-4">Trụ sở chính</h3>
+                            <h3 className="text-[13px] font-black tracking-[0.4em] text-zinc-300 border-l-2 border-primary pl-4">Trụ sở chính</h3>
                             <div className="space-y-8">
                                 <div className="flex items-start gap-5 group cursor-default">
                                     <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 transition-all duration-500 group-hover:bg-primary group-hover:text-black group-hover:scale-110">
@@ -89,7 +89,7 @@ export function Footer() {
                         </div>
 
                         <div className="space-y-10">
-                            <h3 className="text-[11px] font-black tracking-[0.4em] text-zinc-300 border-l-2 border-primary pl-4">Kết nối ngay</h3>
+                            <h3 className="text-[13px] font-black tracking-[0.4em] text-zinc-300 border-l-2 border-primary pl-4">Kết nối ngay</h3>
                             <div className="space-y-8">
                                 <a href="mailto:hr@tt" className="flex items-center gap-5 group">
                                     <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-primary shrink-0 transition-all duration-500 group-hover:bg-primary group-hover:text-black group-hover:scale-110">

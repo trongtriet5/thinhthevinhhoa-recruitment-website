@@ -31,15 +31,13 @@ import {
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 
-const ReactQuill = dynamicImport(() => import('react-quill-new'), { ssr: false })
-import 'react-quill-new/dist/quill.snow.css'
 
 const BRANDS = ['MayCha', 'Tam Hảo', 'Trà Hú', 'BO', 'DCCK']
 const DEPARTMENT_GROUPS = [
-    'Khối vận hành (Các cửa hàng)',
-    'Khối văn phòng (Back Office)',
-    'Khối sản xuất (DCCK)',
-    'Bếp trung tâm (DCCK)'
+    'Khối vận hành',
+    'Khối văn phòng',
+    'Khối sản xuất',
+    'Bếp trung tâm'
 ]
 const POSITIONS = [
     'Quản lý cửa hàng (SM)',
@@ -240,6 +238,17 @@ export default function AdminPage() {
 
     const openEditDialog = (job: any) => {
         setSelectedJob(job)
+        
+        const stripHtml = (html: string) => {
+            if (!html) return ''
+            let text = html.replace(/<br\s*[\/]?>/gi, '\n')
+            text = text.replace(/<\/(p|div|li|h[1-6])>/gi, '\n')
+            text = text.replace(/<[^>]*>?/gm, '')
+            text = text.replace(/&nbsp;/g, ' ')
+            text = text.replace(/^[-•*]\s*/gm, '') 
+            return text.trim()
+        }
+
         setFormData({
             title: job.title,
             brand: job.brand,
@@ -251,8 +260,8 @@ export default function AdminPage() {
             salaryMin: '',
             salaryMax: '',
             isSalaryNegotiable: job.salary === 'Thỏa thuận',
-            description: job.description,
-            requirements: job.requirements,
+            description: stripHtml(job.description),
+            requirements: stripHtml(job.requirements),
             status: job.status
         })
 
@@ -291,7 +300,7 @@ export default function AdminPage() {
                     'Tiêu đề': 'Cửa hàng trưởng',
                     'Thương hiệu': 'MayCha',
                     'Vị trí': 'Quản lý cửa hàng (SM)',
-                    'Khối phòng ban': 'Khối vận hành (Các cửa hàng)',
+                    'Khối phòng ban': 'Khối vận hành',
                     'Địa điểm': 'TP. Hồ Chí Minh, Bình Dương',
                     'Mức lương': '15 - 20 triệu',
                     'Loại hình': 'Toàn thời gian',
@@ -350,19 +359,12 @@ export default function AdminPage() {
         reader.readAsBinaryString(file)
     }
 
-    const quillModules = {
-        toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['clean']
-        ],
-    }
+
 
     if (!isLoggedIn) return null
 
     return (
-        <div className="flex min-h-screen bg-white font-montserrat" style={{ fontFamily: '"Montserrat", sans-serif' }}>
+        <div className="flex min-h-screen bg-white">
             {/* Sidebar */}
             <aside className="w-72 border-r border-zinc-100 bg-white flex flex-col fixed h-full z-20">
                 <div className="p-12">
@@ -370,7 +372,7 @@ export default function AdminPage() {
                 </div>
 
                 <nav className="flex-1 px-6 space-y-1">
-                    <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest transition-all">
+                    <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary text-sm font-black uppercase tracking-widest transition-all">
                         <IconBriefcase size={14} stroke={2.5} />
                         Tin tuyển dụng
                     </a>
@@ -380,7 +382,7 @@ export default function AdminPage() {
                     <Button
                         onClick={handleLogout}
                         variant="ghost"
-                        className="w-full flex items-center justify-start gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-red-500 hover:bg-red-50 transition-all text-[10px] font-bold uppercase tracking-widest"
+                        className="w-full flex items-center justify-start gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-red-500 hover:bg-red-50 transition-all text-sm font-bold uppercase tracking-widest"
                     >
                         <IconLogout size={14} stroke={2} />
                         Đăng xuất
@@ -393,12 +395,12 @@ export default function AdminPage() {
                 <header className="h-20 border-b border-zinc-100 flex items-center justify-between px-12 shrink-0 sticky top-0 z-10 bg-white/80 backdrop-blur-md">
                     <div className="space-y-1">
                         <h1 className="text-sm font-black uppercase tracking-[0.2em] text-zinc-900">Hệ thống quản trị</h1>
-                        <p className="text-[10px] text-zinc-400 font-medium uppercase tracking-widest">Thinh The Vinh Hoa Recruitment Portal</p>
+                        <p className="text-sm text-zinc-400 font-medium uppercase tracking-widest">Thinh The Vinh Hoa Recruitment Portal</p>
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="text-right hidden sm:block">
-                            <p className="text-xs font-bold text-zinc-900 leading-tight">Administrator</p>
-                            <p className="text-[10px] text-zinc-400 uppercase tracking-tighter">Quản trị viên</p>
+                            <p className="text-sm font-bold text-zinc-900 leading-tight">Administrator</p>
+                            <p className="text-sm text-zinc-400 uppercase tracking-tighter">Quản trị viên</p>
                         </div>
                         <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900 border border-zinc-200 shadow-sm overflow-hidden">
                             <Image src="/logo_ttvh.png" alt="TTVH Logo" width={48} height={48} className="object-contain" />
@@ -423,7 +425,7 @@ export default function AdminPage() {
                             <Button
                                 onClick={handleDownloadTemplate}
                                 variant="outline"
-                                className="h-14 px-6 rounded-[1.5rem] border-zinc-200 text-[10px] font-black uppercase tracking-widest hover:bg-zinc-50 transition-all shrink-0"
+                                className="h-14 px-6 rounded-[1.5rem] border-zinc-200 text-sm font-black uppercase tracking-widest hover:bg-zinc-50 transition-all shrink-0"
                             >
                                 <IconDownload size={16} stroke={2.5} className="mr-2" />
                                 Template
@@ -432,7 +434,7 @@ export default function AdminPage() {
                             <div className="relative shrink-0">
                                 <Button
                                     variant="outline"
-                                    className="h-14 px-6 rounded-[1.5rem] border-zinc-200 text-[10px] font-black uppercase tracking-widest hover:bg-zinc-50 transition-all"
+                                    className="h-14 px-6 rounded-[1.5rem] border-zinc-200 text-sm font-black uppercase tracking-widest hover:bg-zinc-50 transition-all"
                                 >
                                     <IconFileImport size={16} stroke={2.5} className="mr-2" />
                                     Import
@@ -447,7 +449,7 @@ export default function AdminPage() {
 
                             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                                 <DialogTrigger asChild>
-                                    <Button className="h-14 px-8 rounded-[1.5rem] bg-black hover:bg-primary hover:text-black text-white text-[10px] font-black uppercase tracking-[0.2em] gap-3 transition-all shadow-xl active:scale-[0.98] shrink-0">
+                                    <Button className="h-14 px-8 rounded-[1.5rem] bg-black hover:bg-primary hover:text-black text-white text-sm font-black uppercase tracking-[0.2em] gap-3 transition-all shadow-xl active:scale-[0.98] shrink-0">
                                         <IconPlus size={16} stroke={3} />
                                         Tạo tin tuyển dụng
                                     </Button>
@@ -457,21 +459,21 @@ export default function AdminPage() {
                                         <div className="bg-primary p-10 text-black">
                                             <DialogHeader>
                                                 <DialogTitle className="text-3xl font-black tracking-tight uppercase">Mở vị trí mới</DialogTitle>
-                                                <DialogDescription className="text-black/50 text-[10px] font-bold uppercase tracking-widest mt-2">Điền các thông tin cần thiết để đăng tải tin tuyển dụng lên website.</DialogDescription>
+                                                <DialogDescription className="text-black/50 text-sm font-bold uppercase tracking-widest mt-2">Điền các thông tin cần thiết để đăng tải tin tuyển dụng lên website.</DialogDescription>
                                             </DialogHeader>
                                         </div>
-                                        <div className="grid gap-8 p-10 bg-white max-h-[70vh] overflow-y-auto">
+                                        <div className="grid gap-8 p-10 bg-white max-h-[70vh] overflow-y-auto overflow-x-hidden">
                                             <div className="grid grid-cols-2 gap-8">
                                                 <div className="space-y-3">
-                                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Tiêu đề công việc</Label>
-                                                    <Input required placeholder="VD: Nhân viên phục vụ" className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
+                                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Tiêu đề công việc</Label>
+                                                    <Input required placeholder="VD: Nhân viên phục vụ" className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
                                                 </div>
                                                 <div className="space-y-3">
-                                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Vị trí chuyên môn</Label>
+                                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Vị trí chuyên môn</Label>
                                                     <div className="space-y-3">
                                                         <select
                                                             required
-                                                            className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                                            className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                                             value={isOtherPosition ? 'Khác' : formData.position}
                                                             onChange={(e) => {
                                                                 if (e.target.value === 'Khác') {
@@ -492,7 +494,7 @@ export default function AdminPage() {
                                                             <Input
                                                                 required
                                                                 placeholder="Nhập vị trí cụ thể..."
-                                                                className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs animate-in slide-in-from-top-2"
+                                                                className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm animate-in slide-in-from-top-2"
                                                                 value={customPosition}
                                                                 onChange={(e) => setCustomPosition(e.target.value)}
                                                             />
@@ -503,10 +505,10 @@ export default function AdminPage() {
 
                                             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                                                 <div className="space-y-3">
-                                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Thương hiệu</Label>
+                                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Thương hiệu</Label>
                                                     <select
                                                         required
-                                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                                         value={formData.brand}
                                                         onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                                                     >
@@ -515,10 +517,10 @@ export default function AdminPage() {
                                                     </select>
                                                 </div>
                                                 <div className="space-y-3">
-                                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Khối phòng ban</Label>
+                                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Khối phòng ban</Label>
                                                     <select
                                                         required
-                                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                                         value={formData.departmentGroup}
                                                         onChange={(e) => setFormData({ ...formData, departmentGroup: e.target.value })}
                                                     >
@@ -528,7 +530,7 @@ export default function AdminPage() {
                                                 </div>
                                                 <div className="space-y-3 md:col-span-2">
                                                     <div className="flex items-center justify-between">
-                                                        <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Mức lương (VNĐ)</Label>
+                                                        <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Mức lương (VNĐ)</Label>
                                                         <label className="flex items-center gap-2 cursor-pointer">
                                                             <input
                                                                 type="checkbox"
@@ -536,7 +538,7 @@ export default function AdminPage() {
                                                                 onChange={(e) => setFormData({ ...formData, isSalaryNegotiable: e.target.checked })}
                                                                 className="w-4 h-4 rounded border-zinc-200 text-black focus:ring-primary"
                                                             />
-                                                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Thỏa thuận</span>
+                                                            <span className="text-sm font-bold text-zinc-400 uppercase tracking-widest">Thỏa thuận</span>
                                                         </label>
                                                     </div>
                                                     {!formData.isSalaryNegotiable ? (
@@ -544,25 +546,25 @@ export default function AdminPage() {
                                                             <div className="flex-1 relative">
                                                                 <Input
                                                                     placeholder="Từ"
-                                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs"
+                                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm"
                                                                     value={formData.salaryMin}
                                                                     onChange={(e) => setFormData({ ...formData, salaryMin: formatCurrency(e.target.value) })}
                                                                 />
-                                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-zinc-300">đ</span>
+                                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-black text-zinc-300">đ</span>
                                                             </div>
                                                             <div className="w-4 h-[2px] bg-zinc-100 shrink-0" />
                                                             <div className="flex-1 relative">
                                                                 <Input
                                                                     placeholder="Đến"
-                                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs"
+                                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm"
                                                                     value={formData.salaryMax}
                                                                     onChange={(e) => setFormData({ ...formData, salaryMax: formatCurrency(e.target.value) })}
                                                                 />
-                                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-zinc-300">đ</span>
+                                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-black text-zinc-300">đ</span>
                                                             </div>
                                                         </div>
                                                     ) : (
-                                                        <div className="h-12 flex items-center px-6 bg-zinc-50/50 border border-zinc-100 rounded-xl text-xs font-black text-zinc-400 italic">
+                                                        <div className="h-12 flex items-center px-6 bg-zinc-50/50 border border-zinc-100 rounded-xl text-sm font-black text-zinc-400 italic">
                                                             Lương thỏa thuận khi phỏng vấn
                                                         </div>
                                                     )}
@@ -570,7 +572,7 @@ export default function AdminPage() {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Địa điểm làm việc (Multi-select)</Label>
+                                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Địa điểm làm việc (Multi-select)</Label>
                                                 <div className="p-6 bg-zinc-50/50 border border-zinc-100 rounded-2xl grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-48 overflow-y-auto scrollbar-thin">
                                                     {ALL_PROVINCES.map(p => (
                                                         <label key={p} className="flex items-center gap-3 cursor-pointer group">
@@ -580,16 +582,16 @@ export default function AdminPage() {
                                                                 onChange={() => handleLocationToggle(p)}
                                                                 className="w-5 h-5 rounded border-zinc-200 text-black focus:ring-primary"
                                                             />
-                                                            <span className="text-[11px] font-bold text-zinc-500 group-hover:text-black transition-colors">{p}</span>
+                                                            <span className="text-[13px] font-bold text-zinc-500 group-hover:text-black transition-colors">{p}</span>
                                                         </label>
                                                     ))}
                                                 </div>
                                             </div>
 
                                             <div className="space-y-3">
-                                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Loại hình</Label>
+                                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Loại hình</Label>
                                                 <select
-                                                    className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                                    className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                                     value={formData.type}
                                                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                                                 >
@@ -600,21 +602,21 @@ export default function AdminPage() {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Mô tả công việc</Label>
+                                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Mô tả công việc</Label>
                                                 <div className="bg-zinc-50/50 rounded-2xl border border-zinc-100 overflow-hidden shadow-sm">
-                                                    <ReactQuill theme="snow" value={formData.description} onChange={(val) => setFormData({ ...formData, description: val })} modules={quillModules} />
+                                                    <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full min-h-[150px] p-4 bg-transparent outline-none resize-y text-sm font-medium text-zinc-700 leading-relaxed placeholder:italic placeholder:text-zinc-400" placeholder="Nhập mô tả công việc (mỗi dòng 1 ý)..." />
                                                 </div>
                                             </div>
 
                                             <div className="space-y-3">
-                                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Yêu cầu ứng viên</Label>
+                                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-primary">Yêu cầu ứng viên</Label>
                                                 <div className="bg-zinc-50/50 rounded-2xl border border-zinc-100 overflow-hidden shadow-sm">
-                                                    <ReactQuill theme="snow" value={formData.requirements} onChange={(val) => setFormData({ ...formData, requirements: val })} modules={quillModules} />
+                                                    <textarea value={formData.requirements} onChange={(e) => setFormData({ ...formData, requirements: e.target.value })} className="w-full min-h-[150px] p-4 bg-transparent outline-none resize-y text-sm font-medium text-zinc-700 leading-relaxed placeholder:italic placeholder:text-zinc-400" placeholder="Nhập yêu cầu ứng viên (mỗi dòng 1 ý)..." />
                                                 </div>
                                             </div>
                                         </div>
                                         <DialogFooter className="p-8 bg-zinc-50/80 border-t border-zinc-100">
-                                            <Button type="submit" className="flex-1 h-16 rounded-2xl bg-black text-white text-[11px] font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all shadow-lg active:scale-[0.98]">Phát hành tin tuyển dụng</Button>
+                                            <Button type="submit" className="flex-1 h-16 rounded-2xl bg-black text-white text-[13px] font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all shadow-lg active:scale-[0.98]">Phát hành tin tuyển dụng</Button>
                                         </DialogFooter>
                                     </form>
                                 </DialogContent>
@@ -645,7 +647,7 @@ export default function AdminPage() {
 
                                     <div className="flex-1 space-y-2 text-center sm:text-left min-w-0">
                                         <div className="flex items-center justify-center sm:justify-start gap-4">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-primary">{job.brand}</span>
+                                            <span className="text-sm font-black uppercase tracking-widest text-primary">{job.brand}</span>
                                             {job.departmentGroup && (
                                                 <span className="text-[9px] font-black tracking-widest text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-full">
                                                     {job.departmentGroup}
@@ -660,13 +662,13 @@ export default function AdminPage() {
                                         <h3 className="text-lg font-black tracking-tight text-zinc-900 line-clamp-1">
                                             {job.title}
                                             {job.position && (
-                                                <span className="ml-2 text-[10px] text-zinc-400 font-bold bg-zinc-100 px-2 py-0.5 rounded uppercase">
+                                                <span className="ml-2 text-sm text-zinc-400 font-bold bg-zinc-100 px-2 py-0.5 rounded uppercase">
                                                     {job.position.split('(')[1]?.replace(')', '') || job.position}
                                                 </span>
                                             )}
                                         </h3>
 
-                                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-1 text-[10px] font-bold text-zinc-400">
+                                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-6 gap-y-1 text-sm font-bold text-zinc-400">
                                             <span className="flex items-center gap-2">
                                                 <IconMapPin size={10} className="opacity-50" />
                                                 <span className="truncate max-w-[200px]">{job.location}</span>
@@ -683,7 +685,7 @@ export default function AdminPage() {
                                             <Button
                                                 variant="outline"
                                                 size="sm"
-                                                className="h-10 flex-1 rounded-xl border-zinc-200 bg-white px-4 text-[10px] font-black uppercase tracking-widest transition-all hover:border-black hover:bg-black hover:text-white sm:flex-none"
+                                                className="h-10 flex-1 rounded-xl border-zinc-200 bg-white px-4 text-sm font-black uppercase tracking-widest transition-all hover:border-black hover:bg-black hover:text-white sm:flex-none"
                                                 onClick={() => openEditDialog(job)}
                                             >
                                                 <IconEdit size={14} className="mr-2" />
@@ -692,7 +694,7 @@ export default function AdminPage() {
                                             <Button
                                                 variant="outline"
                                                 size="sm"
-                                                className="h-10 flex-1 rounded-xl border-zinc-200 bg-white px-4 text-[10px] font-black uppercase tracking-widest transition-all hover:border-red-500 hover:bg-red-500 hover:text-white sm:flex-none"
+                                                className="h-10 flex-1 rounded-xl border-zinc-200 bg-white px-4 text-sm font-black uppercase tracking-widest transition-all hover:border-red-500 hover:bg-red-500 hover:text-white sm:flex-none"
                                                 onClick={() => handleDeleteJob(job.id)}
                                             >
                                                 <IconTrash size={14} className="mr-2" />
@@ -713,7 +715,7 @@ export default function AdminPage() {
                                 <Button
                                     onClick={() => setIsAddDialogOpen(true)}
                                     variant="ghost"
-                                    className="mt-6 text-primary font-black uppercase tracking-widest text-xs hover:bg-primary hover:text-black rounded-xl px-10 h-14 transition-all"
+                                    className="mt-6 text-primary font-black uppercase tracking-widest text-sm hover:bg-primary hover:text-black rounded-xl px-10 h-14 transition-all"
                                 >
                                     Bắt đầu tạo ngay
                                 </Button>
@@ -730,24 +732,24 @@ export default function AdminPage() {
                         <div className="bg-zinc-900 p-10 text-white">
                             <DialogHeader>
                                 <DialogTitle className="text-3xl font-black tracking-tight uppercase">Cập nhật tin</DialogTitle>
-                                <DialogDescription className="text-white/40 text-[10px] font-bold uppercase tracking-widest mt-2 flex items-center gap-2 italic">
+                                <DialogDescription className="text-white/40 text-sm font-bold uppercase tracking-widest mt-2 flex items-center gap-2 italic">
                                     <span className="w-1 h-1 bg-primary rounded-full animate-pulse"></span>
                                     Chế độ hiệu chỉnh ID: {selectedJob?.id}
                                 </DialogDescription>
                             </DialogHeader>
                         </div>
-                        <div className="grid gap-8 p-10 bg-white max-h-[70vh] overflow-y-auto font-montserrat">
+                        <div className="grid gap-8 p-10 bg-white max-h-[70vh] overflow-y-auto overflow-x-hidden ">
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="space-y-3">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Tiêu đề công việc</Label>
-                                    <Input required className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
+                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Tiêu đề công việc</Label>
+                                    <Input required className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
                                 </div>
                                 <div className="space-y-3">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Vị trí cụ thể</Label>
+                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Vị trí cụ thể</Label>
                                     <div className="space-y-3">
                                         <select
                                             required
-                                            className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                            className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                             value={isOtherPosition ? 'Khác' : formData.position}
                                             onChange={(e) => {
                                                 if (e.target.value === 'Khác') {
@@ -768,7 +770,7 @@ export default function AdminPage() {
                                             <Input
                                                 required
                                                 placeholder="Nhập vị trí cụ thể..."
-                                                className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs animate-in slide-in-from-top-2"
+                                                className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm animate-in slide-in-from-top-2"
                                                 value={customPosition}
                                                 onChange={(e) => setCustomPosition(e.target.value)}
                                             />
@@ -779,10 +781,10 @@ export default function AdminPage() {
 
                             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                                 <div className="space-y-3">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Thương hiệu</Label>
+                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Thương hiệu</Label>
                                     <select
                                         required
-                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                         value={formData.brand}
                                         onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                                     >
@@ -791,10 +793,10 @@ export default function AdminPage() {
                                     </select>
                                 </div>
                                 <div className="space-y-3">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Khối phòng ban</Label>
+                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Khối phòng ban</Label>
                                     <select
                                         required
-                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                        className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                         value={formData.departmentGroup}
                                         onChange={(e) => setFormData({ ...formData, departmentGroup: e.target.value })}
                                     >
@@ -804,7 +806,7 @@ export default function AdminPage() {
                                 </div>
                                 <div className="space-y-3 md:col-span-2">
                                     <div className="flex items-center justify-between">
-                                        <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Mức lương (VNĐ)</Label>
+                                        <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Mức lương (VNĐ)</Label>
                                         <label className="flex items-center gap-2 cursor-pointer">
                                             <input
                                                 type="checkbox"
@@ -812,7 +814,7 @@ export default function AdminPage() {
                                                 onChange={(e) => setFormData({ ...formData, isSalaryNegotiable: e.target.checked })}
                                                 className="w-4 h-4 rounded border-zinc-200 text-black focus:ring-primary"
                                             />
-                                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Thỏa thuận</span>
+                                            <span className="text-sm font-bold text-zinc-400 uppercase tracking-widest">Thỏa thuận</span>
                                         </label>
                                     </div>
                                     {!formData.isSalaryNegotiable ? (
@@ -820,25 +822,25 @@ export default function AdminPage() {
                                             <div className="flex-1 relative">
                                                 <Input
                                                     placeholder="Từ"
-                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs"
+                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm"
                                                     value={formData.salaryMin}
                                                     onChange={(e) => setFormData({ ...formData, salaryMin: formatCurrency(e.target.value) })}
                                                 />
-                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-zinc-300">đ</span>
+                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-black text-zinc-300">đ</span>
                                             </div>
                                             <div className="w-4 h-[2px] bg-zinc-100 shrink-0" />
                                             <div className="flex-1 relative">
                                                 <Input
                                                     placeholder="Đến"
-                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-xs"
+                                                    className="rounded-xl h-12 border-zinc-100 bg-zinc-50/50 focus:bg-white transition-all shadow-sm font-bold text-sm"
                                                     value={formData.salaryMax}
                                                     onChange={(e) => setFormData({ ...formData, salaryMax: formatCurrency(e.target.value) })}
                                                 />
-                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-black text-zinc-300">đ</span>
+                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-black text-zinc-300">đ</span>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="h-12 flex items-center px-6 bg-zinc-50/50 border border-zinc-100 rounded-xl text-xs font-black text-zinc-400 italic">
+                                        <div className="h-12 flex items-center px-6 bg-zinc-50/50 border border-zinc-100 rounded-xl text-sm font-black text-zinc-400 italic">
                                             Lương thỏa thuận khi phỏng vấn
                                         </div>
                                     )}
@@ -846,7 +848,7 @@ export default function AdminPage() {
                             </div>
 
                             <div className="space-y-3">
-                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Địa điểm làm việc</Label>
+                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Địa điểm làm việc</Label>
                                 <div className="p-6 bg-zinc-50/50 border border-zinc-100 rounded-2xl grid grid-cols-2 sm:grid-cols-3 gap-4 max-h-48 overflow-y-auto scrollbar-thin">
                                     {ALL_PROVINCES.map(p => (
                                         <label key={p} className="flex items-center gap-3 cursor-pointer group">
@@ -856,16 +858,16 @@ export default function AdminPage() {
                                                 onChange={() => handleLocationToggle(p)}
                                                 className="w-5 h-5 rounded border-zinc-200 text-black focus:ring-primary"
                                             />
-                                            <span className="text-[11px] font-bold text-zinc-500 group-hover:text-black transition-colors">{p}</span>
+                                            <span className="text-[13px] font-bold text-zinc-500 group-hover:text-black transition-colors">{p}</span>
                                         </label>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="space-y-3">
-                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Loại hình</Label>
+                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Loại hình</Label>
                                 <select
-                                    className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-xs font-bold focus:bg-white transition-all shadow-sm outline-none"
+                                    className="w-full h-12 px-4 rounded-xl border border-zinc-100 bg-zinc-50/50 text-sm font-bold focus:bg-white transition-all shadow-sm outline-none"
                                     value={formData.type}
                                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                                 >
@@ -877,9 +879,9 @@ export default function AdminPage() {
 
                             <div className="space-y-3 p-6 bg-zinc-50/50 rounded-2xl border border-zinc-100">
                                 <div className="flex items-center justify-between">
-                                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-900">Trạng thái tin đăng</Label>
+                                    <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-900">Trạng thái tin đăng</Label>
                                     <select
-                                        className="text-[10px] bg-black text-white px-4 py-1.5 rounded-full font-black uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-black transition-all outline-none"
+                                        className="text-sm bg-black text-white px-4 py-1.5 rounded-full font-black uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-black transition-all outline-none"
                                         value={formData.status}
                                         onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                                     >
@@ -891,47 +893,27 @@ export default function AdminPage() {
                             </div>
 
                             <div className="space-y-3">
-                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Mô tả công việc</Label>
+                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Mô tả công việc</Label>
                                 <div className="bg-zinc-50/50 rounded-2xl border border-zinc-100 overflow-hidden shadow-sm">
-                                    <ReactQuill theme="snow" value={formData.description} onChange={(val) => setFormData({ ...formData, description: val })} modules={quillModules} />
+                                    <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full min-h-[150px] p-4 bg-transparent outline-none resize-y text-sm font-medium text-zinc-700 leading-relaxed placeholder:italic placeholder:text-zinc-400" placeholder="Nhập mô tả công việc (mỗi dòng 1 ý)..." />
                                 </div>
                             </div>
 
                             <div className="space-y-3">
-                                <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Yêu cầu ứng viên</Label>
+                                <Label className="text-sm font-black uppercase tracking-[0.2em] text-zinc-400">Yêu cầu ứng viên</Label>
                                 <div className="bg-zinc-50/50 rounded-2xl border border-zinc-100 overflow-hidden shadow-sm">
-                                    <ReactQuill theme="snow" value={formData.requirements} onChange={(val) => setFormData({ ...formData, requirements: val })} modules={quillModules} />
+                                    <textarea value={formData.requirements} onChange={(e) => setFormData({ ...formData, requirements: e.target.value })} className="w-full min-h-[150px] p-4 bg-transparent outline-none resize-y text-sm font-medium text-zinc-700 leading-relaxed placeholder:italic placeholder:text-zinc-400" placeholder="Nhập yêu cầu ứng viên (mỗi dòng 1 ý)..." />
                                 </div>
                             </div>
                         </div>
                         <DialogFooter className="p-8 bg-zinc-50/80 border-t border-zinc-100">
-                            <Button type="submit" className="flex-1 h-16 rounded-2xl bg-zinc-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all shadow-lg active:scale-[0.98]">Cập nhật thông tin</Button>
+                            <Button type="submit" className="flex-1 h-16 rounded-2xl bg-zinc-900 text-white text-[13px] font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all shadow-lg active:scale-[0.98]">Cập nhật thông tin</Button>
                         </DialogFooter>
                     </form>
                 </DialogContent>
             </Dialog>
 
             <style jsx global>{`
-                .ql-toolbar.ql-snow {
-                    border: none !important;
-                    border-bottom: 1px solid #f4f4f5 !important;
-                    padding: 8px 12px !important;
-                }
-                .ql-container.ql-snow {
-                    border: none !important;
-                    min-height: 150px;
-                }
-                .ql-editor {
-                    font-family: "Montserrat", sans-serif !important;
-                    font-size: 13px;
-                    line-height: 1.6;
-                    color: #52525b;
-                    padding: 16px !important;
-                }
-                .ql-editor.ql-blank::before {
-                    font-style: italic;
-                    color: #d4d4d8;
-                }
                 .scrollbar-thin::-webkit-scrollbar {
                     width: 4px;
                 }

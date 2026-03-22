@@ -31,14 +31,14 @@ export function Hero() {
                             />
                             <button
                                 onClick={() => document.getElementById('jobs')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="absolute right-4 top-4 bottom-4 px-10 rounded-xl bg-primary text-white font-black uppercase tracking-widest text-[11px] hover:bg-primary-dark transition-all"
+                                className="absolute right-4 top-4 bottom-4 px-10 rounded-xl bg-primary text-white font-black uppercase tracking-widest text-[13px] hover:bg-primary-dark transition-all"
                             >
                                 Tìm kiếm
                             </button>
                         </div>
 
                         <div className="space-y-8 pt-8 border-t border-black/5">
-                            <p className="text-[11px] font-black uppercase tracking-[0.4em] text-foreground/30">Hệ thống thương hiệu</p>
+                            <p className="text-[13px] font-black uppercase tracking-[0.4em] text-foreground/30">Hệ thống thương hiệu</p>
                             <div className="flex flex-wrap items-center gap-x-16 gap-y-8">
                                 <Image src="/logo_maycha.png" alt="MayCha" width={240} height={80} className="h-20 w-auto object-contain hover:scale-110 transition-transform duration-500" />
                                 <Image src="/logo_tamhao.jpg" alt="Tam Hảo" width={240} height={80} className="h-20 w-auto object-contain hover:scale-110 transition-transform duration-500" />

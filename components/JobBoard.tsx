@@ -19,10 +19,10 @@ import { ApplicationForm } from './ApplicationForm'
 const ALL_BRANDS = ['MayCha', 'Tam Hảo', 'Trà Hú', 'Back Office', 'DCCK']
 
 const DEPARTMENT_GROUPS = [
-    'Khối vận hành (Các cửa hàng)',
-    'Khối văn phòng (Back Office)',
-    'Khối sản xuất (DCCK)',
-    'Bếp trung tâm (DCCK)'
+    'Khối vận hành',
+    'Khối văn phòng',
+    'Khối sản xuất',
+    'Bếp trung tâm'
 ]
 
 export function JobBoard() {
@@ -117,7 +117,7 @@ export function JobBoard() {
                     <aside className="w-full lg:w-64 space-y-8 shrink-0">
                         <div className="space-y-8 sticky top-40">
                             <div className="space-y-6">
-                                <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">Địa điểm</h3>
+                                <h3 className="text-[13px] font-black uppercase tracking-[0.3em] text-primary">Địa điểm</h3>
                                 <div className="space-y-3.5 max-h-64 overflow-y-auto pr-4 scrollbar-thin">
                                     {availableLocations.map(loc => (
                                         <label key={loc} className="flex items-center gap-3.5 cursor-pointer group">
@@ -134,7 +134,7 @@ export function JobBoard() {
                             </div>
 
                             <div className="space-y-6">
-                                <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">Khối phòng ban</h3>
+                                <h3 className="text-[13px] font-black uppercase tracking-[0.3em] text-primary">Khối phòng ban</h3>
                                 <div className="space-y-3.5">
                                     {DEPARTMENT_GROUPS.map(dept => (
                                         <label key={dept} className="flex items-start gap-3.5 cursor-pointer group">
@@ -152,7 +152,7 @@ export function JobBoard() {
                             </div>
 
                             <div className="space-y-6">
-                                <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">Thương hiệu</h3>
+                                <h3 className="text-[13px] font-black uppercase tracking-[0.3em] text-primary">Thương hiệu</h3>
                                 <div className="space-y-3.5">
                                     {ALL_BRANDS.map(brand => (
                                         <label key={brand} className="flex items-center gap-3.5 cursor-pointer group">
@@ -192,26 +192,26 @@ export function JobBoard() {
 
                                         <div className="flex-1 space-y-4 text-center md:text-left">
                                             <div className="flex items-center justify-center md:justify-start gap-4">
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{job.brand}</span>
+                                                <span className="text-[12px] font-black uppercase tracking-[0.2em] text-primary">{job.brand}</span>
                                                 {job.departmentGroup && (
                                                     <span className="text-[9px] font-black tracking-widest text-zinc-500 bg-zinc-100 px-2 py-1 rounded-full">
                                                         {job.departmentGroup}
                                                     </span>
                                                 )}
                                                 <span className="w-1 h-1 rounded-full bg-black/10" />
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/30">{job.type}</span>
+                                                <span className="text-[12px] font-black uppercase tracking-[0.2em] text-foreground/30">{job.type}</span>
                                             </div>
 
                                             <h3 className="text-3xl font-black tracking-tight text-foreground group-hover:text-primary transition-colors flex items-center gap-3">
                                                 {job.title}
                                                 {job.position && (
-                                                    <span className="text-[10px] font-black text-white bg-black px-2 py-1 rounded uppercase tracking-widest">
+                                                    <span className="text-[12px] font-black text-white bg-black px-2 py-1 rounded uppercase tracking-widest">
                                                         {job.position.split('(')[1]?.replace(')', '') || job.position}
                                                     </span>
                                                 )}
                                             </h3>
 
-                                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 md:gap-x-10 gap-y-3 text-xs font-bold text-foreground/40">
+                                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 md:gap-x-10 gap-y-3 text-sm font-bold text-foreground/40">
                                                 <span className="flex items-center gap-2 italic">
                                                     <IconMapPin className="w-4 h-4 opacity-50" />
                                                     {job.location}
@@ -233,7 +233,7 @@ export function JobBoard() {
                                                     <Button
                                                         variant="outline"
                                                         onClick={() => setViewingJob(job)}
-                                                        className="h-16 px-10 rounded-xl border-2 border-black/5 hover:border-black hover:bg-black hover:text-white font-black uppercase tracking-widest text-[10px] transition-all"
+                                                        className="h-16 px-10 rounded-xl border-2 border-black/5 hover:border-black hover:bg-black hover:text-white font-black uppercase tracking-widest text-[12px] transition-all"
                                                     >
                                                         Xem chi tiết
                                                     </Button>
@@ -245,15 +245,15 @@ export function JobBoard() {
                                                         </DialogHeader>
                                                         <div className="bg-primary p-6 md:p-12 text-black">
                                                             <div className="flex items-center gap-4 mb-6">
-                                                                <span className="px-3 py-1 bg-black text-white text-[10px] font-black uppercase tracking-widest rounded-full">
+                                                                <span className="px-3 py-1 bg-black text-white text-[12px] font-black uppercase tracking-widest rounded-full">
                                                                     {viewingJob.brand}
                                                                 </span>
                                                                 {viewingJob.departmentGroup && (
-                                                                    <span className="px-3 py-1 bg-white/60 text-black text-[10px] font-black tracking-widest rounded-full border border-black/10">
+                                                                    <span className="px-3 py-1 bg-white/60 text-black text-[12px] font-black tracking-widest rounded-full border border-black/10">
                                                                         {viewingJob.departmentGroup}
                                                                     </span>
                                                                 )}
-                                                                <span className="font-black text-[10px] uppercase tracking-widest opacity-40">
+                                                                <span className="font-black text-[12px] uppercase tracking-widest opacity-40">
                                                                     {viewingJob.type}
                                                                 </span>
                                                             </div>
@@ -265,7 +265,7 @@ export function JobBoard() {
                                                                     </span>
                                                                 )}
                                                             </h2>
-                                                            <div className="flex flex-wrap gap-8 text-xs font-black uppercase tracking-widest opacity-60">
+                                                            <div className="flex flex-wrap gap-8 text-sm font-black uppercase tracking-widest opacity-60">
                                                                 <div className="flex items-center gap-2">
                                                                     <IconMapPin size={16} />
                                                                     {viewingJob.location}
@@ -280,20 +280,46 @@ export function JobBoard() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="p-6 md:p-12 space-y-8 md:space-y-12 bg-white max-h-[60vh] overflow-y-auto">
+                                                        <div className="p-6 md:p-12 space-y-8 md:space-y-12 bg-white max-h-[60vh] overflow-y-auto overflow-x-hidden w-full">
                                                             <div className="space-y-6">
-                                                                <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Mô tả công việc</h3>
-                                                                <div
-                                                                    className="text-zinc-600 font-medium leading-relaxed italic text-lg quill-content"
-                                                                    dangerouslySetInnerHTML={{ __html: viewingJob.description }}
-                                                                />
+                                                                <h3 className="text-[13px] font-black uppercase tracking-[0.4em] text-primary">Mô tả công việc</h3>
+                                                                <div className="text-zinc-600 font-medium leading-relaxed text-lg">
+                                                                    {(() => {
+                                                                        if (!viewingJob.description) return null;
+                                                                        let text = viewingJob.description.replace(/<br\s*[\/]?>/gi, '\n');
+                                                                        text = text.replace(/<\/(p|div|li|h[1-6])>/gi, '\n');
+                                                                        text = text.replace(/<[^>]*>?/gm, '');
+                                                                        text = text.replace(/&nbsp;/g, ' ');
+                                                                        const lines = text.split('\n').map((l: string) => l.trim().replace(/^[-•*]\s*/, '')).filter((l: string) => l.length > 0);
+                                                                        return (
+                                                                            <ul className="list-disc pl-5 space-y-2">
+                                                                                {lines.map((line: string, idx: number) => (
+                                                                                    <li key={idx}>{line}</li>
+                                                                                ))}
+                                                                            </ul>
+                                                                        );
+                                                                    })()}
+                                                                </div>
                                                             </div>
                                                             <div className="space-y-6">
-                                                                <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Yêu cầu ứng viên</h3>
-                                                                <div
-                                                                    className="text-zinc-600 font-bold leading-relaxed quill-content"
-                                                                    dangerouslySetInnerHTML={{ __html: viewingJob.requirements }}
-                                                                />
+                                                                <h3 className="text-[13px] font-black uppercase tracking-[0.4em] text-primary">Yêu cầu ứng viên</h3>
+                                                                <div className="text-zinc-600 font-medium leading-relaxed text-base">
+                                                                    {(() => {
+                                                                        if (!viewingJob.requirements) return null;
+                                                                        let text = viewingJob.requirements.replace(/<br\s*[\/]?>/gi, '\n');
+                                                                        text = text.replace(/<\/(p|div|li|h[1-6])>/gi, '\n');
+                                                                        text = text.replace(/<[^>]*>?/gm, '');
+                                                                        text = text.replace(/&nbsp;/g, ' ');
+                                                                        const lines = text.split('\n').map((l: string) => l.trim().replace(/^[-•*]\s*/, '')).filter((l: string) => l.length > 0);
+                                                                        return (
+                                                                            <ul className="list-disc pl-5 space-y-2">
+                                                                                {lines.map((line: string, idx: number) => (
+                                                                                    <li key={idx}>{line}</li>
+                                                                                ))}
+                                                                            </ul>
+                                                                        );
+                                                                    })()}
+                                                                </div>
                                                             </div>
                                                             <div className="pt-10 border-t border-zinc-100">
                                                                 <Button
@@ -301,7 +327,7 @@ export function JobBoard() {
                                                                         handleTrackClick(viewingJob.id)
                                                                         handleApply(viewingJob)
                                                                     }}
-                                                                    className="flex items-center justify-center w-full h-16 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-primary hover:text-black transition-all"
+                                                                    className="flex items-center justify-center w-full h-16 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-primary hover:text-black transition-all"
                                                                 >
                                                                     Ứng tuyển ngay
                                                                 </Button>
@@ -316,7 +342,7 @@ export function JobBoard() {
                                                     handleTrackClick(job.id)
                                                     handleApply(job)
                                                 }}
-                                                className="inline-flex items-center justify-center h-16 px-12 rounded-xl bg-black text-white font-black uppercase tracking-widest text-[10px] hover:bg-primary transition-all duration-300 w-full"
+                                                className="inline-flex items-center justify-center h-16 px-12 rounded-xl bg-black text-white font-black uppercase tracking-widest text-[12px] hover:bg-primary transition-all duration-300 w-full"
                                             >
                                                 Gia nhập ngay
                                             </Button>

@@ -27,7 +27,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#fafafa] px-4 font-montserrat" style={{ fontFamily: '"Montserrat", sans-serif' }}>
+        <div className="min-h-screen flex items-center justify-center bg-[#fafafa] px-4 " style={{ fontFamily: '"Montserrat", sans-serif' }}>
             <Card className="w-full max-w-[400px] border-0 shadow-2xl rounded-[2.5rem] bg-white overflow-hidden">
                 <CardContent className="p-0">
                     <div className="bg-white pt-16 pb-8 text-black flex flex-col items-center gap-8">
@@ -47,7 +47,7 @@ export default function LoginPage() {
                                         <Input 
                                             id="username" 
                                             placeholder="Username" 
-                                            className="h-14 pl-12 rounded-2xl bg-zinc-50 border-zinc-100 focus:bg-white focus:ring-primary/20 focus:border-primary transition-all text-xs font-bold shadow-sm"
+                                            className="h-14 pl-12 rounded-2xl bg-zinc-50 border-zinc-100 focus:bg-white focus:ring-primary/20 focus:border-primary transition-all text-[12px]s font-bold shadow-sm"
                                             value={username}
                                             onChange={(e) => setUsername(e.target.value)}
                                             required
@@ -62,7 +62,7 @@ export default function LoginPage() {
                                             id="password" 
                                             type="password" 
                                             placeholder="••••••••" 
-                                            className="h-14 pl-12 rounded-2xl bg-zinc-50 border-zinc-100 focus:bg-white focus:ring-primary/20 focus:border-primary transition-all text-xs font-bold shadow-sm"
+                                            className="h-14 pl-12 rounded-2xl bg-zinc-50 border-zinc-100 focus:bg-white focus:ring-primary/20 focus:border-primary transition-all text-[12px]s font-bold shadow-sm"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             required

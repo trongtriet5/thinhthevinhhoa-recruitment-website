@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Job {
+  id           String   @id @default(cuid())
+  title        String
+  brand        String
+  location     String
+  type         String   @default("Toàn thời gian")
+  status       String   @default("Đang tuyển")
+  salary       String
+  link         String?
+  description  String   @db.Text
+  requirements String   @db.Text
+  applicants   Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

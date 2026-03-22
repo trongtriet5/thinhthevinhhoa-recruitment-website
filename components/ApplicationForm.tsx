@@ -48,7 +48,7 @@ function SearchableSelect({
 
     return (
         <div className="space-y-2 relative" ref={containerRef}>
-            <Label className="text-[11px] font-black uppercase tracking-widest opacity-40">{label}</Label>
+            <Label className="text-[13px] font-black uppercase tracking-widest opacity-40">{label}</Label>
             <div
                 className={cn(
                     "w-full h-12 px-4 rounded-xl border border-black/5 bg-zinc-50 flex items-center justify-between cursor-pointer focus-within:bg-white focus-within:ring-2 focus-within:ring-primary/20 transition-all font-bold text-sm",
@@ -96,7 +96,7 @@ function SearchableSelect({
                                 </div>
                             ))
                         ) : (
-                            <div className="px-4 py-8 text-center text-xs font-bold text-foreground/30 italic">
+                            <div className="px-4 py-8 text-center text-[12px]s font-bold text-foreground/30 italic">
                                 Không tìm thấy kết quả
                             </div>
                         )}
@@ -316,7 +316,12 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                     setErrors({})
                 }, 3000)
             } else {
-                alert('Có lỗi xảy ra, vui lòng thử lại sau.')
+                try {
+                    const resData = await response.json()
+                    alert(resData.message || 'Có lỗi xảy ra, vui lòng thử lại sau.')
+                } catch (e) {
+                    alert('Có lỗi xảy ra, vui lòng thử lại sau.')
+                }
             }
         } catch (error) {
             console.error('Submission error:', error)
@@ -358,7 +363,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                         <form onSubmit={handleSubmit} className="p-4 md:p-8 space-y-4 md:space-y-6 max-h-[75vh] md:max-h-[70vh] overflow-y-auto scrollbar-thin">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                 <div className="space-y-2">
-                                    <Label htmlFor="name" className="text-[11px] font-black uppercase tracking-widest opacity-40">Họ và tên *</Label>
+                                    <Label htmlFor="name" className="text-[13px] font-black uppercase tracking-widest opacity-40">Họ và tên *</Label>
                                     <Input
                                         id="name"
                                         required
@@ -377,7 +382,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                                     {errors.name && <p className="text-[10px] text-red-500 font-bold italic">{errors.name}</p>}
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="phone" className="text-[11px] font-black uppercase tracking-widest opacity-40">Số điện thoại *</Label>
+                                    <Label htmlFor="phone" className="text-[13px] font-black uppercase tracking-widest opacity-40">Số điện thoại *</Label>
                                     <Input
                                         id="phone"
                                         required
@@ -400,7 +405,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                 <div className="space-y-2">
-                                    <Label className="text-[11px] font-black uppercase tracking-widest opacity-40">Giới tính *</Label>
+                                    <Label className="text-[13px] font-black uppercase tracking-widest opacity-40">Giới tính *</Label>
                                     <select
                                         className={cn(
                                             "w-full h-12 px-4 rounded-xl border border-black/5 bg-zinc-50 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all font-bold text-sm outline-none appearance-none",
@@ -421,7 +426,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                                     {errors.gender && <p className="text-[10px] text-red-500 font-bold italic">{errors.gender}</p>}
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="birthday" className="text-[11px] font-black uppercase tracking-widest opacity-40">Ngày sinh (dd/mm/yyyy) *</Label>
+                                    <Label htmlFor="birthday" className="text-[13px] font-black uppercase tracking-widest opacity-40">Ngày sinh (dd/mm/yyyy) *</Label>
                                     <Input
                                         id="birthday"
                                         required
@@ -459,7 +464,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                 <div className="space-y-2">
-                                    <Label htmlFor="email" className="text-[11px] font-black uppercase tracking-widest opacity-40">Email *</Label>
+                                    <Label htmlFor="email" className="text-[13px] font-black uppercase tracking-widest opacity-40">Email *</Label>
                                     <Input
                                         id="email"
                                         required
@@ -479,7 +484,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                                     {errors.email && <p className="text-[10px] text-red-500 font-bold italic">{errors.email}</p>}
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="private_code" className="text-[11px] font-black uppercase tracking-widest opacity-40">Số CCCD *</Label>
+                                    <Label htmlFor="private_code" className="text-[13px] font-black uppercase tracking-widest opacity-40">Số CCCD *</Label>
                                     <Input
                                         id="private_code"
                                         required
@@ -500,9 +505,9 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                             </div>
 
                             <div className="space-y-4 pt-4 border-t border-black/5">
-                                <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Địa chỉ liên hệ *</h3>
+                                <h3 className="text-[13px] font-black uppercase tracking-[0.4em] text-primary">Địa chỉ liên hệ *</h3>
                                 <div className="space-y-2">
-                                    <Label htmlFor="street" className="text-[11px] font-black uppercase tracking-widest opacity-40">Số nhà tên đường *</Label>
+                                    <Label htmlFor="street" className="text-[13px] font-black uppercase tracking-widest opacity-40">Số nhà tên đường *</Label>
                                     <Input
                                         id="street"
                                         required
@@ -548,7 +553,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                             </div>
 
                             <div className="space-y-4 pt-4 border-t border-black/5">
-                                <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Khu vực mong muốn làm việc *</h3>
+                                <h3 className="text-[13px] font-black uppercase tracking-[0.4em] text-primary">Khu vực mong muốn làm việc *</h3>
                                 <SearchableSelect
                                     label="Lựa chọn khu vực *"
                                     placeholder="Chọn khu vực"
@@ -563,7 +568,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                             </div>
 
                             <div className="space-y-2">
-                                <Label className="text-[11px] font-black uppercase tracking-widest opacity-40">CV của bạn</Label>
+                                <Label className="text-[13px] font-black uppercase tracking-widest opacity-40">CV của bạn</Label>
                                 <div
                                     className={cn(
                                         "relative group cursor-pointer",
@@ -608,7 +613,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                             <Button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-[0.2em] text-xs hover:bg-primary hover:text-black transition-all group"
+                                className="w-full h-16 rounded-2xl bg-black text-white font-black uppercase tracking-[0.2em] text-[12px]s hover:bg-primary hover:text-black transition-all group"
                             >
                                 {isSubmitting ? (
                                     <IconLoader2 className="animate-spin" />

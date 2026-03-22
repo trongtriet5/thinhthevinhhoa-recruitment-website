@@ -1,18 +1,23 @@
+import Image from 'next/image'
+
 const TESTIMONIALS = [
     {
         quote: '"Từ khi đồng hành cùng MayCha, tôi học được cách xây dựng đội ngũ gắn kết và luôn giữ tiêu chuẩn dịch vụ đồng đều ở mọi ca làm."',
         name: 'Phạm Minh Khang',
         role: 'Quản lý cửa hàng - MayCha',
+        logo: '/logo_maycha.png'
     },
     {
         quote: '"Tam Hảo cho tôi cơ hội thử nghiệm nhiều ý tưởng vận hành mới, từ đó cải thiện doanh thu và trải nghiệm khách hàng rõ rệt."',
         name: 'Lê Ngọc Anh',
         role: 'Quản lý cửa hàng - Tam Hảo',
+        logo: '/logo_tamhao.jpg'
     },
     {
         quote: '"Môi trường tại Trà Hú rất năng động, giúp tôi trưởng thành nhanh về quản trị con người, kiểm soát chất lượng và xử lý tình huống."',
         name: 'Trần Quốc Bảo',
         role: 'Quản lý cửa hàng - Trà Hú',
+        logo: '/logo_trahu.png'
     },
 ]
 
@@ -22,7 +27,7 @@ export function Testimonial() {
             <div className="container px-4 md:px-6 relative z-10">
                 <div className="flex flex-col lg:flex-row items-end justify-between gap-12 mb-20">
                     <div className="max-w-3xl space-y-6">
-                        <p className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Văn hóa tại Thịnh Thế Vinh Hoa</p>
+                        <p className="text-[13px] font-black uppercase tracking-[0.4em] text-primary">Văn hóa tại Thịnh Thế Vinh Hoa</p>
                         <h2 className="text-4xl md:text-6xl font-black leading-[0.9] tracking-tighter italic">
                             "Con người là <br className="hidden md:block" /> trung tâm của <br className="hidden md:block" /> mọi sự phát triển"
                         </h2>
@@ -36,7 +41,9 @@ export function Testimonial() {
                                 {item.quote}
                             </p>
                             <div className="flex items-center gap-4 pt-4 border-t border-black/5 mt-auto">
-                                <div className="w-12 h-12 rounded-full bg-primary/20 shrink-0" />
+                                <div className="w-12 h-12 rounded-full border border-black/5 shrink-0 overflow-hidden flex items-center justify-center bg-white">
+                                    <Image src={item.logo} alt={item.role} width={48} height={48} className="object-cover w-full h-full" />
+                                </div>
                                 <div>
                                     <h4 className="font-black text-base">{item.name}</h4>
                                     <p className="text-[9px] font-black uppercase tracking-widest text-primary mt-0.5">{item.role}</p>
