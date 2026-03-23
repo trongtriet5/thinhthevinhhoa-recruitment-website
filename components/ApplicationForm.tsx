@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { IconUpload, IconCheck, IconLoader2, IconSearch, IconChevronDown } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
 
 function SearchableSelect({
     label,
@@ -297,6 +298,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
 
             if (response.ok) {
                 setIsSuccess(true)
+                toast.success('Gửi hồ sơ thành công!')
                 setTimeout(() => {
                     onOpenChange(false)
                     setIsSuccess(false)
@@ -318,14 +320,14 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
             } else {
                 try {
                     const resData = await response.json()
-                    alert(resData.message || 'Có lỗi xảy ra, vui lòng thử lại sau.')
+                    toast.error(resData.message || 'Có lỗi xảy ra, vui lòng thử lại sau.')
                 } catch (e) {
-                    alert('Có lỗi xảy ra, vui lòng thử lại sau.')
+                    toast.error('Có lỗi xảy ra, vui lòng thử lại sau.')
                 }
             }
         } catch (error) {
             console.error('Submission error:', error)
-            alert('Có lỗi xảy ra, vui lòng thử lại sau.')
+            toast.error('Có lỗi xảy ra, vui lòng thử lại sau.')
         } finally {
             setIsSubmitting(false)
         }
@@ -394,7 +396,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                                         )}
                                         value={formData.phone}
                                         onChange={e => {
-                                            const val = e.target.value
+                                            const val = e.target.value.replace(/\D/g, '')
                                             setFormData(prev => ({ ...prev, phone: val }))
                                             validateField('phone', val)
                                         }}
@@ -495,7 +497,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
                                         )}
                                         value={formData.private_code}
                                         onChange={e => {
-                                            const val = e.target.value
+                                            const val = e.target.value.replace(/\D/g, '')
                                             setFormData(prev => ({ ...prev, private_code: val }))
                                             validateField('private_code', val)
                                         }}

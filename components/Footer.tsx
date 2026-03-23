@@ -85,6 +85,30 @@ export function Footer() {
                                         </p>
                                     </div>
                                 </div>
+
+                                {/* Google Maps Window */}
+                                <a
+                                    href="https://www.google.com/maps/place/C%C3%94NG+TY+C%E1%BB%94+PH%E1%BA%A6N+TH%E1%BB%8ANH+TH%E1%BA%BE+VINH+HOA/@10.788845,106.685167,17z/data=!4m15!1m8!3m7!1s0x31752f2d5950d84b:0xb696f494dae2d2a1!2zMzMgSHXhu7NuaCBU4buLbmggQ-G7p2EsIFBoxrDhu51uZyBWw7UgVGjhu4sgU8OhdSwgUXXhuq1uIDMsIEjhu5MgQ2jDrSBNaW5oLCBWaWV0bmFt!3b1!8m2!3d10.788845!4d106.6877419!16s%2Fg%2F11ldp91scq!3m5!1s0x31752f067971f0d3:0x13631e6186a01d0!8m2!3d10.788845!4d106.6877419!16s%2Fg%2F11ykvh9mfz"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block group relative"
+                                >
+                                    <div className="w-full h-48 rounded-3xl overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl transition-all duration-500 group-hover:border-primary/50 group-hover:shadow-primary/10">
+                                        <iframe
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.297426189569!2d106.685167!3d10.788845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f067971f0d3%3A0x13631e6186a01d0!2zQ8OUTkcgVFkgQ-G7oiBQSOG6pk4gVEjhu4pOIEjhurYgVklOSCBIT0E!5e0!3m2!1svi!2s!4v1711183110000!5m2!1svi!2s"
+                                            width="100%"
+                                            height="100%"
+                                            style={{ border: 0 }}
+                                            allowFullScreen={false}
+                                            loading="lazy"
+                                            referrerPolicy="no-referrer-when-downgrade"
+                                            className="pointer-events-none"
+                                        />
+
+                                        {/* Light glow on hover */}
+                                        <div className="absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-primary/30 transition-all duration-500 pointer-events-none" />
+                                    </div>
+                                </a>
                             </div>
                         </div>
 

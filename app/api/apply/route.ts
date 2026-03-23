@@ -20,8 +20,14 @@ export async function POST(request: Request) {
         const cleanPhone = phone.toString().replace(/\D/g, '')
 
         // Check if candidate already applied for this jobId
-        if (cleanPhone && jobId) {
-            const existing = await sql`SELECT id FROM "CandidateApplication" WHERE "phone" = ${cleanPhone} AND "jobId" = ${jobId}`
+        if ((cleanPhone || private_code) && jobId) {
+            const existing = await sql`
+                SELECT id 
+                FROM "CandidateApplication" 
+                WHERE ("phone" = ${cleanPhone} OR "cccd" = ${private_code || null}) 
+                  AND "jobId" = ${jobId}
+                LIMIT 1
+            `
             if (existing.length > 0) {
                 return NextResponse.json({ error: 'Duplicate', message: 'Bạn đã ứng tuyển vị trí này rồi! Hệ thống đã ghi nhận.' }, { status: 400 })
             }
@@ -81,9 +87,9 @@ export async function POST(request: Request) {
         }
 
         // Record successful application
-        if (cleanPhone && jobId) {
+        if ((cleanPhone || private_code) && jobId) {
             try {
-                await sql`INSERT INTO "CandidateApplication" ("phone", "jobId", "jobPosition") VALUES (${cleanPhone}, ${jobId}, ${jobPosition || ''}) ON CONFLICT DO NOTHING`
+                await sql`INSERT INTO "CandidateApplication" ("phone", "jobId", "jobPosition", "cccd") VALUES (${cleanPhone}, ${jobId}, ${jobPosition || ''}, ${private_code || null}) ON CONFLICT DO NOTHING`
             } catch (err) {
                 console.error('Failed to log CandidateApplication:', err)
             }
