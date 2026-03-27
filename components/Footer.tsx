@@ -38,10 +38,8 @@ export function Footer() {
 
                         <div className="flex gap-4">
                             {[
-                                { icon: IconBrandFacebook, href: "#" },
-                                { icon: IconBrandLinkedin, href: "#" },
-                                { icon: IconBrandInstagram, href: "#" },
-                                { icon: IconBrandTwitter, href: "#" }
+                                { icon: IconBrandFacebook, href: "https://www.facebook.com/career.maycha" },
+                                { icon: IconBrandLinkedin, href: "https://www.linkedin.com/company/maycha-jsc/" }
                             ].map((social, i) => (
                                 <a
                                     key={i}

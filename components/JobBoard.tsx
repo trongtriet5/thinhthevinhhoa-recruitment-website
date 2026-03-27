@@ -55,15 +55,7 @@ export function JobBoard() {
         fetchJobs()
     }, [])
 
-    const handleTrackClick = async (jobId: string) => {
-        try {
-            await fetch(`/api/jobs/${jobId}/click`, { method: 'POST' })
-            // Refresh counts locally for feedback
-            setJobs(prev => prev.map(j => j.id === jobId ? { ...j, applicants: (j.applicants || 0) + 1 } : j))
-        } catch (error) {
-            console.error('Failed to track click:', error)
-        }
-    }
+
 
     const toggleFilter = (item: string, state: string[], setState: (val: string[]) => void) => {
         if (state.includes(item)) {
@@ -324,7 +316,6 @@ export function JobBoard() {
                                                             <div className="pt-10 border-t border-zinc-100">
                                                                 <Button
                                                                     onClick={() => {
-                                                                        handleTrackClick(viewingJob.id)
                                                                         handleApply(viewingJob)
                                                                     }}
                                                                     className="flex items-center justify-center w-full h-16 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-primary hover:text-black transition-all"
@@ -339,7 +330,6 @@ export function JobBoard() {
 
                                             <Button
                                                 onClick={() => {
-                                                    handleTrackClick(job.id)
                                                     handleApply(job)
                                                 }}
                                                 className="inline-flex items-center justify-center h-16 px-12 rounded-xl bg-black text-white font-black uppercase tracking-widest text-[12px] hover:bg-primary transition-all duration-300 w-full"
@@ -364,6 +354,9 @@ export function JobBoard() {
                     job={jobToApply}
                     isOpen={isApplyFormOpen}
                     onOpenChange={setIsApplyFormOpen}
+                    onSuccess={(jobId) => {
+                        setJobs(prev => prev.map(j => j.id === jobId ? { ...j, applicants: (j.applicants || 0) + 1 } : j))
+                    }}
                 />
             )}
         </section>

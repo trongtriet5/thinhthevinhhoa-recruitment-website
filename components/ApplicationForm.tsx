@@ -113,13 +113,14 @@ interface ApplicationFormProps {
     job: any
     isOpen: boolean
     onOpenChange: (open: boolean) => void
+    onSuccess?: (jobId: string) => void
 }
 
 const naturalSort = (a: string, b: string) => {
     return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
 }
 
-export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormProps) {
+export function ApplicationForm({ job, isOpen, onOpenChange, onSuccess }: ApplicationFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const [file, setFile] = useState<File | null>(null)
@@ -298,6 +299,7 @@ export function ApplicationForm({ job, isOpen, onOpenChange }: ApplicationFormPr
 
             if (response.ok) {
                 setIsSuccess(true)
+                if (onSuccess) onSuccess(job.id)
                 toast.success('Gửi hồ sơ thành công!')
                 setTimeout(() => {
                     onOpenChange(false)

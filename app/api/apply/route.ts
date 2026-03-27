@@ -52,7 +52,7 @@ export async function POST(request: Request) {
             current_address: current_address,
             cf56: cf56,
             campaign_current_id: 'MC0843401603266140',
-            note: `${jobPosition || ''}`.trim(),
+            note: [jobBrand, jobPosition].filter(Boolean).join(' - '),
             field_raws: 'source,gender,cf56'
         }
 
@@ -90,8 +90,10 @@ export async function POST(request: Request) {
         if ((cleanPhone || private_code) && jobId) {
             try {
                 await sql`INSERT INTO "CandidateApplication" ("phone", "jobId", "jobPosition", "cccd") VALUES (${cleanPhone}, ${jobId}, ${jobPosition || ''}, ${private_code || null}) ON CONFLICT DO NOTHING`
+                // Increment applicants count in Job table
+                await sql`UPDATE "Job" SET "applicants" = "applicants" + 1 WHERE "id" = ${jobId}`
             } catch (err) {
-                console.error('Failed to log CandidateApplication:', err)
+                console.error('Failed to log CandidateApplication or increment applicants:', err)
             }
         }
 
