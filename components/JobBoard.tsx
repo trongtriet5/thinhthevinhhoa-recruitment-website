@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ApplicationForm } from './ApplicationForm'
+import { decodeHtml } from '@/lib/rich-text'
 
 
 
@@ -281,7 +282,7 @@ export function JobBoard() {
                                                                         let text = viewingJob.description.replace(/<br\s*[\/]?>/gi, '\n');
                                                                         text = text.replace(/<\/(p|div|li|h[1-6])>/gi, '\n');
                                                                         text = text.replace(/<[^>]*>?/gm, '');
-                                                                        text = text.replace(/&nbsp;/g, ' ');
+                                                                        text = decodeHtml(text);
                                                                         const lines = text.split('\n').map((l: string) => l.trim().replace(/^[-•*]\s*/, '')).filter((l: string) => l.length > 0);
                                                                         return (
                                                                             <ul className="list-disc pl-5 space-y-2">
@@ -301,7 +302,7 @@ export function JobBoard() {
                                                                         let text = viewingJob.requirements.replace(/<br\s*[\/]?>/gi, '\n');
                                                                         text = text.replace(/<\/(p|div|li|h[1-6])>/gi, '\n');
                                                                         text = text.replace(/<[^>]*>?/gm, '');
-                                                                        text = text.replace(/&nbsp;/g, ' ');
+                                                                        text = decodeHtml(text);
                                                                         const lines = text.split('\n').map((l: string) => l.trim().replace(/^[-•*]\s*/, '')).filter((l: string) => l.length > 0);
                                                                         return (
                                                                             <ul className="list-disc pl-5 space-y-2">

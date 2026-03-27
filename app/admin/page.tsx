@@ -22,6 +22,7 @@ import {
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { decodeHtml } from '@/lib/rich-text'
 import {
     Dialog,
     DialogContent,
@@ -247,8 +248,7 @@ export default function AdminPage() {
             let text = html.replace(/<br\s*[\/]?>/gi, '\n')
             text = text.replace(/<\/(p|div|li|h[1-6])>/gi, '\n')
             text = text.replace(/<[^>]*>?/gm, '')
-            text = text.replace(/&nbsp;/g, ' ')
-            text = text.replace(/^[-•*]\s*/gm, '')
+            text = decodeHtml(text)
             return text.trim()
         }
 

@@ -113,7 +113,7 @@ export function Footer() {
                         <div className="space-y-10">
                             <h3 className="text-[13px] font-black tracking-[0.4em] text-zinc-300 border-l-2 border-primary pl-4">Kết nối ngay</h3>
                             <div className="space-y-8">
-                                <a href="mailto:hr@tt" className="flex items-center gap-5 group">
+                                <a href="mailto:hr@maycha.com.vn" className="flex items-center gap-5 group">
                                     <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/5 flex items-center justify-center text-primary shrink-0 transition-all duration-500 group-hover:bg-primary group-hover:text-black group-hover:scale-110">
                                         <IconMail size={24} />
                                     </div>

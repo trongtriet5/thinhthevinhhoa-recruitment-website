@@ -9,6 +9,17 @@ function escapeHtml(value: string) {
         .replace(/'/g, '&#39;')
 }
 
+export function decodeHtml(value: string) {
+    if (!value) return ''
+    return value
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, ' ')
+}
+
 export function normalizeRichTextInput(value: unknown) {
     if (typeof value !== 'string') {
         return ''
